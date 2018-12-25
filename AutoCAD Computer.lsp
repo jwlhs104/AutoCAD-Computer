@@ -1,6 +1,6 @@
 ;AutoCad Computer
 (defun c:ac (/ ip r1 r2)
-  (graphscr) (command "osnap" "none")
+ (graphscr) (command "osnap" "none")
   (setq ip '(0 0 0)
 	r1 10
 	r2 50
@@ -40,6 +40,7 @@
   )
   (repeat 97
     (setq i (+ 1 i))
+			
     
     ; change line condition
     (cond ((= i 21)
@@ -112,20 +113,41 @@
     ;draw key
     (if (and (/= i 2)(/= i 7)(/= i 12)(/= i 17)(/= i 35)(/= i 53)(/= i 82)(/= i 83)(/= i 85)(/= i 94))
       (progn
-		(cond ((= i 1)
-			   (setq str1 "esc"
-			   		 str2 ""
-			   )
-			  )
-
-			  (t
-			   (setq str1 "F"
-			   		 str2 (itoa (- i 2))
-			   )
-			  )
-		)
+		  (setq keylist (finddat (findfile "kb.dat") i)
+		 	    key (cadr keylist)
+		  )
     	(command "rectangle" p1 p2)(command "extrude" (entlast) "" 7 "")
-	    (command "text" (rpoint3d p1 0 -6.5 7) "3" "0" (strcat str1 str2) "")
+	    (command "text" (rpoint3d p1 0 -6.5 7) "3" "0" key "")
+		(cond((= i 84)
+			 (setq p3 (rpoint3d p1 5 -3 7)
+			       p4 (rpoint3d p1 3 -6 7)
+				   p5 (rpoint3d p1 7 -6 7)
+			 )
+			 (command "line" p3 p4 p5 "c")
+			 )
+			 ((= i 95)
+			 (setq p3 (rpoint3d p1 3 -5 7)
+			       p4 (rpoint3d p1 6 -3 7)
+				   p5 (rpoint3d p1 6 -7 7)
+			 )
+			 (command "line" p3 p4 p5 "c")
+			 )
+			 ((= i 96)
+			 (setq p3 (rpoint3d p1 5 -7 7)
+			       p4 (rpoint3d p1 3 -4 7)
+				   p5 (rpoint3d p1 7 -4 7)
+			 )
+			 (command "line" p3 p4 p5 "c")
+			 )
+			 ((= i 97)
+			 (setq p3 (rpoint3d p1 6 -5 7)
+			       p4 (rpoint3d p1 3 -7 7)
+				   p5 (rpoint3d p1 3 -3 7)
+			 )
+			 (command "line" p3 p4 p5 "c")
+			 )
+		
+		)
 	  )
     )
   )
