@@ -30,7 +30,8 @@
 ;;;	ed (append data ed))
 ;;;  (princ ed);(subst (cons 62 0) (assoc 62 ed) ed)
 )
-(defun poweron(/ e1)
+;=========================================================
+(defun c:poweron(/ e1)
   (command "ucs" "W")
   (command "ucs" "O" '(0 0 20))
   (setq p1 '(-90 -8 10)
@@ -40,6 +41,14 @@
   (command "ucs" "3p" p1 p2 p3)
   (command "rectangle" '(0 0) '(180 80)) (command "extrude" (entlast) "" -100 "") (setq e1 (entlast))
   (command "subtract" e0 "" e1 "")
+  (command "ucs" "W")
+  (while (and (setq key (cadr (grread))) (/= 13 key))
+    (princ (car key))
+    (princ "")
+    (setq value_set (finddat2 "key_coordinate.dat" -90 -75))
+    (setq value (nth 2 value_set))
+    (princ value)
+  )
 )
 ;==========================================
 (defun drawKB (ip / p1)
@@ -124,7 +133,7 @@
     ;draw key
     (if (and (/= i 2)(/= i 7)(/= i 12)(/= i 17)(/= i 35)(/= i 53)(/= i 82)(/= i 83)(/= i 85)(/= i 94))
       (progn
-		  (setq keylist (finddat (findfile "kb.dat") i)
+		  (setq keylist (finddat "kb.dat" i)
 		 	    key (cadr keylist)
 		  )
     	(command "rectangle" p1 p2)(command "extrude" (entlast) "" 7 "")

@@ -1,5 +1,4 @@
-(vl-load-com)
-
+ 
 ;*************
  
 (defun line-draw ()
@@ -21,7 +20,6 @@
  
 );defun
 
-;===================================================================
 (defun print-length (notifier-object reactor-object parameter-list)
  
 (cond
